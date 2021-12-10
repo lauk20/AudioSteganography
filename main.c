@@ -123,7 +123,7 @@ int main(){
   int bit = 0;
   int nextbyte = 0;
   char currentbyte = *(message + nextbyte);
-  for (i = 0; i < strlen(message); i++){
+  for (i = 0; i <= strlen(message); i++){
     //printf("%d\n", i);
     if (!skip){
       nextbyte = nextbyte + 1;
