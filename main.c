@@ -1,12 +1,14 @@
 #include <stdio.h>
+
 #include <stdlib.h>
 
 #include <fcntl.h>
+
 #include <unistd.h>
 
 #include <string.h>
 
-void decode(){
+void decode() {
   int fd = open("audio.wav", O_RDONLY, 0644);
   char riff_header[36];
   read(fd, riff_header, 36);
@@ -20,57 +22,57 @@ void decode(){
   int datachunk_size = 0;
   while (found_data) {
     char chunk_descriptor[5];
-  	read(fd, chunk_descriptor, 4);
+    read(fd, chunk_descriptor, 4);
 
-  	if (strcmp(chunk_descriptor, "data") == 0){
-    	write(fdwrite, chunk_descriptor, 4);
-    	found_data = 0;
-    	int data_size;
-    	read(fd, &data_size, 4);
-    	printf("Data_Size: %d\n", data_size);
-    	datachunk_size = data_size;
-    	write(fdwrite, &data_size, 4);
-  	} else {
-    	int size;
-    	read(fd, &size, 4); //gets subchunk size
+    if (strcmp(chunk_descriptor, "data") == 0) {
+      write(fdwrite, chunk_descriptor, 4);
+      found_data = 0;
+      int data_size;
+      read(fd, & data_size, 4);
+      printf("Data_Size: %d\n", data_size);
+      datachunk_size = data_size;
+      write(fdwrite, & data_size, 4);
+    } else {
+      int size;
+      read(fd, & size, 4); //gets subchunk size
 
-    	char * ignored_chunk_data = calloc(size, 1);
-    	read(fd, ignored_chunk_data, size); //ignores the unecessary chunk (skips it);
-  	}
+      char * ignored_chunk_data = calloc(size, 1);
+      read(fd, ignored_chunk_data, size); //ignores the unecessary chunk (skips it);
+    }
   }
 
-  char * message = calloc(datachunk_size/8, 1);
+  char * message = calloc(datachunk_size / 8, 1);
   int i;
   int bytesread = 0;
   int skip = 0;
   int bit = 0;
   int nextbyte = 0;
   int consecutive_zero_bit_count = 0; //if it reaches 8 then null byte, so can stop
-  char currentbyte = *(message + nextbyte);
-  for (i = 0; i < datachunk_size && consecutive_zero_bit_count < 8; i++){
+  char currentbyte = * (message + nextbyte);
+  for (i = 0; i < datachunk_size && consecutive_zero_bit_count < 8; i++) {
     //printf("%d\n", i);
-    if (!skip){
+    if (!skip) {
       char character_to_add;
 
-      while (bit < 8){
+      while (bit < 8) {
         char abyte;
-        read(fd, &abyte, 1);
+        read(fd, & abyte, 1);
         bytesread = bytesread + 1;
 
-        if ((abyte & (1 << 0)) != 0){ //bit is 1
+        if ((abyte & (1 << 0)) != 0) { //bit is 1
           //printf("1\n");
           character_to_add = character_to_add | (1 << bit);
-      	} else {
+        } else {
           //printf("0\n");
-        	character_to_add = character_to_add & ~(1 << bit);
-      	}
+          character_to_add = character_to_add & ~(1 << bit);
+        }
 
-      	bit = bit + 1;
-    	}
+        bit = bit + 1;
+      }
 
-      strncat(message, &character_to_add, 1);
+      strncat(message, & character_to_add, 1);
 
-      if (character_to_add == 0){
+      if (character_to_add == 0) {
         consecutive_zero_bit_count = 8;
       }
 
@@ -82,7 +84,7 @@ void decode(){
   printf("Decoded message: %s\n", message);
 }
 
-int main(){
+int main() {
   int fd = open("furelise.wav", O_RDONLY, 0644);
   char riff_header[36];
   read(fd, riff_header, 36);
@@ -96,23 +98,23 @@ int main(){
   int datachunk_size = 0;
   while (found_data) {
     char chunk_descriptor[5];
-  	read(fd, chunk_descriptor, 4);
+    read(fd, chunk_descriptor, 4);
 
-  	if (strcmp(chunk_descriptor, "data") == 0){
-    	write(fdwrite, chunk_descriptor, 4);
-    	found_data = 0;
-    	int data_size;
-    	read(fd, &data_size, 4);
-    	printf("Data_Size: %d\n", data_size);
-    	datachunk_size = data_size;
-    	write(fdwrite, &data_size, 4);
-  	} else {
-    	int size;
-    	read(fd, &size, 4); //gets subchunk size
+    if (strcmp(chunk_descriptor, "data") == 0) {
+      write(fdwrite, chunk_descriptor, 4);
+      found_data = 0;
+      int data_size;
+      read(fd, & data_size, 4);
+      printf("Data_Size: %d\n", data_size);
+      datachunk_size = data_size;
+      write(fdwrite, & data_size, 4);
+    } else {
+      int size;
+      read(fd, & size, 4); //gets subchunk size
 
-    	char * ignored_chunk_data = calloc(size, 1);
-    	read(fd, ignored_chunk_data, size); //ignores the unecessary chunk (skips it);
-  	}
+      char * ignored_chunk_data = calloc(size, 1);
+      read(fd, ignored_chunk_data, size); //ignores the unecessary chunk (skips it);
+    }
   }
 
   //char * message = "once upon a time.";
@@ -122,36 +124,36 @@ int main(){
   int skip = 0;
   int bit = 0;
   int nextbyte = 0;
-  char currentbyte = *(message + nextbyte);
-  for (i = 0; i <= strlen(message); i++){
+  char currentbyte = * (message + nextbyte);
+  for (i = 0; i <= strlen(message); i++) {
     //printf("%d\n", i);
-    if (!skip){
+    if (!skip) {
       nextbyte = nextbyte + 1;
-      while (bit < 8){
+      while (bit < 8) {
         //printf("bit%d\n", bit);
-        if ((currentbyte & (1 << bit)) != 0){ //bit is 1
+        if ((currentbyte & (1 << bit)) != 0) { //bit is 1
           char abyte;
-        	read(fd, &abyte, 1);
-        	bytesread = bytesread + 1;
+          read(fd, & abyte, 1);
+          bytesread = bytesread + 1;
 
-        	abyte = abyte | (1 << 0);
+          abyte = abyte | (1 << 0);
 
-        	write(fdwrite, &abyte, sizeof(abyte));
-      	} else {
-        	char abyte;
-        	read(fd, &abyte, 1);
-        	bytesread = bytesread + 1;
+          write(fdwrite, & abyte, sizeof(abyte));
+        } else {
+          char abyte;
+          read(fd, & abyte, 1);
+          bytesread = bytesread + 1;
 
-        	abyte = abyte & ~(1 << 0);
+          abyte = abyte & ~(1 << 0);
 
-        	write(fdwrite, &abyte, sizeof(abyte));
-      	}
+          write(fdwrite, & abyte, sizeof(abyte));
+        }
 
-      	bit = bit + 1;
-    	}
+        bit = bit + 1;
+      }
 
       bit = 0;
-      currentbyte = *(message + nextbyte);
+      currentbyte = * (message + nextbyte);
     }
   }
 
