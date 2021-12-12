@@ -74,7 +74,7 @@ void decode(char * filename) {
   }
 
   //printf("bytesread: %d\n", bytesread);
-  printf("%s", message);
+  printf("%s\n", message);
 }
 
 int encode_from_message(char * filename, char * message, int bytestoread){
