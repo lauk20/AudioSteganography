@@ -27,17 +27,31 @@ def main():
 
     allsamples = []
     #np.append(allsamples, 0);
+    samples = np.array((0))
+    finalsamples = np.array((0));
+    newresult = 0;
     for x in range(width):
-        #print(x);
+        print(x);
+        #array = np.array();
+        result = 0;
         for y in range(height):
             r, g, b = image.getpixel((x,y));
             amplitude = (r + g + b)/3;
             frequency = maxFreq - (freqRange / (y + 1));
-            values = np.linspace(0, samplesPerXPixel, sampleRate);
+            values = np.linspace(0, audioLength // width // height, sampleRate * (audioLength // width // height));
             result = np.sin(frequency * 2 * np.pi * values);
+            #samples = np.append(samples, result);
+            newresult = np.append(samples, result);
+            samples = newresult;
+            #array.append(result);
             #allsamples.append(result)
+        wavfile.write('stest.wav', 44100, samples);
+        continue; #here temporarily
+        print("wrote something to file");
         #print(result);
-        audio.writeframes(result);
+        #audio.writeframes(array);
+
+    wavfile.write("stest.wav", 44100, samples);
 
     #wavfile.write('Spectro.wav', sampleRate, allsamples);
 
