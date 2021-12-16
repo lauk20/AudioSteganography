@@ -35,10 +35,13 @@ def main():
             frequency = maxFreq - (freqRange / (y + 1));
             values = np.linspace(0, samplesPerXPixel, sampleRate);
             result = np.sin(frequency * 2 * np.pi * values);
-            allsamples.append(result)
+            #allsamples.append(result)
+        #print(result);
+        audio.writeframes(result);
 
-    wavfile.write('Spectro.wav', sampleRate, allsamples);
+    #wavfile.write('Spectro.wav', sampleRate, allsamples);
 
     #print(counter);
+    print("DONE");
     audio.close();
 main();
