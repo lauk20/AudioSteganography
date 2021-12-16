@@ -1,12 +1,15 @@
 from PIL import Image, ImageOps
 import wave, struct, math, random
+import array
+from scipy.io import wavfile
+import numpy as np
 
 def main():
     sampleRate = 44100; #sampling rate
     audioLength = 60 * 2; #seconds
     totalSamples = sampleRate * audioLength;
 
-    image = ImageOps.grayscale(Image.open('lambo.jpg'));
+    image = Image.open('lambo.jpg');
     pixels = image.load();
     width, height = image.size;
 
@@ -17,27 +20,25 @@ def main():
     audio.setsampwidth(2); #2 bytes, 16 bit-depth
     audio.setframerate(sampleRate);
 
-    pixelWidth = totalSamples // width;
     maxFreq = 17000;
     minFreq = 7000;
     freqRange = maxFreq - minFreq;
+    samplesPerXPixel = math.floor(totalSamples / width);
 
-    counter = 0;
-
+    allsamples = []
+    #np.append(allsamples, 0);
     for x in range(width):
-        volume = 0;
-        for p in range(pixelWidth):
-            for y in range(height):
-                intensity = image.getpixel((x, y));
-                #print(intensity);
-                frequency = maxFreq - y;
+        #print(x);
+        for y in range(height):
+            r, g, b = image.getpixel((x,y));
+            amplitude = (r + g + b)/3;
+            frequency = maxFreq - (freqRange / (y + 1));
+            values = np.linspace(0, samplesPerXPixel, sampleRate);
+            result = np.sin(frequency * 2 * np.pi * values);
+            allsamples.append(result)
 
-                volume = math.floor(freqRange * math.sin(intensity * math.pi * frequency / sampleRate));
-                #print(volume);
-                counter = counter + 1;
+    wavfile.write('Spectro.wav', sampleRate, allsamples);
 
-        data = struct.pack('<h', volume); # < is little endian and h is 2 bytes
-        audio.writeframesraw(data);
-    print(counter);
-
+    #print(counter);
+    audio.close();
 main();
