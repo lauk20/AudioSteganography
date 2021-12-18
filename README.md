@@ -13,6 +13,7 @@
 
 ### 12/16/21
 **Kenny Lau** Continued working on the image to spectrogram program. Started write-up for project. Getting closer with image to spectrogram, but still does not work properly.
+
 **David Chong** Created basic spectrogram using numpy, matplotlib, and scipy.  Still need to work on creating a better looking graph with more discernable features.
 
 ### 12/15/21
