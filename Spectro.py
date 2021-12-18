@@ -22,11 +22,6 @@ def newMain():
     minFreq = 200;
     freqRange = maxFreq - minFreq;
     samplesPerColumn = math.floor(totalSamples / width);
-    freqPerPixel = math.floor(freqRange / height);
-
-    result = array.array('h');
-    print(samplesPerColumn);
-    print(freqPerPixel);
 
     for sample in range(totalSamples):
         #print(sample);
@@ -42,13 +37,13 @@ def newMain():
 
             superimposed = superimposed + intensity * math.sin(frequency * 2 * math.pi * sample / sampleRate);
 
-        superimposedbytelike = array.array('h');
+        superimposedbytelike = array.array('h'); #'h' indicates signed short (2 bytes), which is what we need since bit-depth is 16 bits
         if (superimposed > 32767):
-            superimposed = 32767;
+            superimposed = 32767; #max for signed short
         elif (superimposed < -32768):
-            superimposed = -32767;
+            superimposed = -32767; #min for signed short
         superimposedbytelike.append(int(superimposed));
-        audio.writeframes(superimposedbytelike);
+        audio.writeframes(superimposedbytelike); #we needed the array.array() since writeframes() only takes in a byte-like object
 
     audio.close();
 
