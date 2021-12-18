@@ -6,7 +6,7 @@ import numpy as np
 
 def newMain():
     sampleRate = 44100;
-    audioLength = 15; #seconds
+    audioLength = 5; #seconds
     totalSamples = sampleRate * audioLength;
 
     image = Image.open("lambo.jpg").convert("L");
@@ -19,29 +19,67 @@ def newMain():
     audio.setframerate(sampleRate);
 
     maxFreq = 17000;
-    minFreq = 7000;
+    minFreq = 200;
     freqRange = maxFreq - minFreq;
     samplesPerColumn = math.floor(totalSamples / width);
-    samplesPerPixel = math.floor(samplesPerColumn / height);
+    freqPerPixel = math.floor(freqRange / height);
 
     result = array.array('h');
     print(samplesPerColumn);
-    print(samplesPerPixel);
+    print(freqPerPixel);
 
+    for sample in range(totalSamples):
+        #print(sample);
+        superimposed = 0;
+        for row in range(height):
+            col = sample // samplesPerColumn;
+            if (col >= width):
+                continue
+            intensity = image.getpixel((col, row))
+            #print(intensity)
+            frequency = (freqRange / height) * (height - row) + minFreq;
+            #print(frequency);
+
+            superimposed = superimposed + intensity * math.sin(frequency * 2 * math.pi * sample / sampleRate);
+
+        superimposedbytelike = array.array('h');
+        if (superimposed > 32767):
+            superimposed = 32767;
+        elif (superimposed < -32768):
+            superimposed = -32767;
+        superimposedbytelike.append(int(superimposed));
+        audio.writeframes(superimposedbytelike);
+
+    audio.close();
+
+    """
     for x in range(width):
         print(x);
+        sample = 0;
         for y in range(height):
-            temp = [];
+            #sample = 0;
             intensity = image.getpixel((x,y));
+            #print(intensity);
             #print(intensity, frequency, freqRange);
-            for i in range(samplesPerPixel):
+            for i in range(0, freqPerPixel):
                 #print(i);
-                sample = intensity * math.sin(((freqRange/height) * (height - y) + minFreq) * 2 * math.pi * i);
-                result.append(int(math.floor(sample)));
+                sample = sample + intensity * math.sin(x * 2 * math.pi * i/sampleRate);
+                #print(intensity * math.sin(x * 2 * math.pi * i/sampleRate));
+                #result.append(int(math.floor(sample)));
                 #print(int(math.floor(sample)));
+                #print(sample);
+                if (sample > 32767 or sample < -32767):
+                    sample = 32767;
+                    samples = struct.pack("<h", int(sample));
+                    audio.writeframesraw(samples);
+                    sample = 0;
             #result.append(temp);
-    audio.writeframes(result);
+        #print(sample);
+        samples = struct.pack("<h", int(sample));
+        audio.writeframesraw(samples);
 
+    #audio.writeframes(result);
+    """
 
 def main():
     sampleRate = 44100; #sampling rate
