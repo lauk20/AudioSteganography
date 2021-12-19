@@ -44,33 +44,39 @@ void decode(char * filename) {
   char currentbyte = * (message + nextbyte);
   for (i = 0; i < datachunk_size && consecutive_zero_bit_count < 8; i++) {
     //printf("%d\n", i);
-    if (!skip) {
-      char character_to_add;
+    char character_to_add;
 
-      while (bit < 8) {
-        char abyte;
+    while (bit < 8) {
+      char abyte;
+      read(fd, & abyte, 1);
+      bytesread = bytesread + 1;
+
+      if (skip){
         read(fd, & abyte, 1);
         bytesread = bytesread + 1;
-
-        if ((abyte & (1 << 0)) != 0) { //bit is 1
-          //printf("1\n");
-          character_to_add = character_to_add | (1 << bit);
-        } else {
-          //printf("0\n");
-          character_to_add = character_to_add & ~(1 << bit);
-        }
-
-        bit = bit + 1;
+        skip = 0;
+      } else {
+        skip = 1;
       }
 
-      strncat(message, & character_to_add, 1);
-
-      if (character_to_add == 0) {
-        consecutive_zero_bit_count = 8;
+      if ((abyte & (1 << 0)) != 0) { //bit is 1
+        //printf("1\n");
+        character_to_add = character_to_add | (1 << bit);
+      } else {
+        //printf("0\n");
+        character_to_add = character_to_add & ~(1 << bit);
       }
 
-      bit = 0;
+      bit = bit + 1;
     }
+
+    strncat(message, & character_to_add, 1);
+
+    if (character_to_add == 0) {
+      consecutive_zero_bit_count = 8;
+    }
+
+    bit = 0;
   }
 
   //printf("bytesread: %d\n", bytesread);
@@ -117,40 +123,56 @@ int encode_from_message(char * filename, char * message, int bytestoread){
   int nextbyte = 0;
   char currentbyte = * (message + nextbyte);
   for (i = 0; i <= bytestoread; i++) {
+    //printf("%c\n", currentbyte);
     //printf("%d\n", i);
-    if (!skip) {
-      nextbyte = nextbyte + 1;
-      while (bit < 8) {
-        //printf("bit%d\n", bit);
-        if ((currentbyte & (1 << bit)) != 0) { //bit is 1
-          char abyte;
+    nextbyte = nextbyte + 1;
+    while (bit < 8) {
+      //printf("bit%d\n", bit);
+      if ((currentbyte & (1 << bit)) != 0) { //bit is 1
+        char abyte;
+        read(fd, & abyte, 1);
+        bytesread = bytesread + 1;
+
+        if (skip){
+          write(fdwrite, & abyte, sizeof(abyte));
           read(fd, & abyte, 1);
           bytesread = bytesread + 1;
-
-          abyte = abyte | (1 << 0);
-
-          write(fdwrite, & abyte, sizeof(abyte));
+          skip = 0;
         } else {
-          char abyte;
-          read(fd, & abyte, 1);
-          bytesread = bytesread + 1;
-
-          abyte = abyte & ~(1 << 0);
-
-          write(fdwrite, & abyte, sizeof(abyte));
+          skip = 1;
         }
 
-        bit = bit + 1;
+        abyte = abyte | (1 << 0);
+
+        write(fdwrite, & abyte, sizeof(abyte));
+      } else {
+        char abyte;
+        read(fd, & abyte, 1);
+        bytesread = bytesread + 1;
+
+        if (skip){
+          write(fdwrite, & abyte, sizeof(abyte));
+          read(fd, & abyte, 1);
+          bytesread = bytesread + 1;
+          skip = 0;
+        } else {
+          skip = 1;
+        }
+
+        abyte = abyte & ~(1 << 0);
+
+        write(fdwrite, & abyte, sizeof(abyte));
       }
 
-      bit = 0;
-      currentbyte = * (message + nextbyte);
+      bit = bit + 1;
     }
+
+    bit = 0;
+    currentbyte = * (message + nextbyte);
   }
 
   //printf("bytesread: %d\n", bytesread);
 
-  int x;
   char * remainingbytes = calloc(datachunk_size - bytesread, 1);
   read(fd, remainingbytes, datachunk_size - bytesread);
   write(fdwrite, remainingbytes, datachunk_size - bytesread);
@@ -170,20 +192,28 @@ int encode(char * filename){
 }
 
 int main(int argc, char ** args) {
-  if (argc < 3){
-    printf("TO RUN: ./main [decode/encode] [filename.wav] [OPTIONAL: message (will read from stdin if not given)]\n");
+  if (argc < 4){
+    printf("TO RUN: ./main [decode/encode] [method: lsb/parity] [filename.wav] [OPTIONAL: message (will read from stdin if not given)]\n");
     return 1;
   }
 
   if (strcmp(args[1], "encode") == 0){
-    if (argc > 3){
-      encode_from_message(args[2], args[3], strlen(args[3]));
-    } else {
-      encode(args[2]);
+    if (strcmp(args[2], "lsb") == 0){
+      if (argc > 4){
+        encode_from_message(args[3], args[4], strlen(args[4]));
+      } else {
+        encode(args[3]);
+      }
+    } else if (strcmp(args[2], "parity") == 0){
+      if (argc > 4){
+        //encode_from_message(args[3], args[4], strlen(args[4]));
+      } else {
+        //encode(args[3]);
+      }
     }
   } else if (strcmp(args[1], "decode") == 0) {
     if (argc > 2){
-      decode(args[2]);
+      decode(args[3]);
     }
   }
 
