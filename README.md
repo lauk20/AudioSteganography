@@ -8,6 +8,9 @@
 
 
 ## Development Log
+### 12/19/21
+**Kenny Lau** Fixed LSB encoding. Before it was altering the LSB of every byte in the file. However, since we are using 16-bit audio files, this meant that not every LSB is truly insignificant. So, made it so that it only altered the LSB of the 2 bytes (i.e. the LSB of the 1st byte in the 2 byte series).
+
 ### 12/17/21
 **Kenny Lau** Finally got image to spectrogram program working. Needs to improve/learn how to take in command line arguments for Python. (Used Audacity to view the spectrogram created from image).
 
