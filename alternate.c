@@ -44,13 +44,12 @@ void decode(char * filename){
       read(fd, ignored_chunk_data, size); //ignores the unecessary chunk (skips it);
     
     }
-    char var[5];
+  }char var[5];
     int chunksize = 0;
     read(fd, var, 4);
     read(fd, chunksize, 4);
     char message[chunksize];
     read(fd, message, chunksize);
     printf("%s\n", message);
-  }
 }
 
