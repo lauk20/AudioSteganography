@@ -8,16 +8,19 @@
 
 
 ## Development Log
+### 12/20/21
+**Kenny Lau:** Started detailed write-up on project to explain what we learned while working on this project. Started on slides for presentation.
+
 ### 12/19/21
-**Kenny Lau** Fixed LSB encoding. Before it was altering the LSB of every byte in the file. However, since we are using 16-bit audio files, this meant that not every LSB is truly insignificant. So, made it so that it only altered the LSB of the 2 bytes (i.e. the LSB of the 1st byte in the 2 byte series).
+**Kenny Lau:** Fixed LSB encoding. Before it was altering the LSB of every byte in the file. However, since we are using 16-bit audio files, this meant that not every LSB is truly insignificant. So, made it so that it only altered the LSB of the 2 bytes (i.e. the LSB of the 1st byte in the 2 byte series).
 
 ### 12/17/21
-**Kenny Lau** Finally got image to spectrogram program working. Needs to improve/learn how to take in command line arguments for Python. (Used Audacity to view the spectrogram created from image).
+**Kenny Lau:** Finally got image to spectrogram program working. Needs to improve/learn how to take in command line arguments for Python. (Used Audacity to view the spectrogram created from image).
 
 ### 12/16/21
-**Kenny Lau** Continued working on the image to spectrogram program. Started write-up for project. Getting closer with image to spectrogram, but still does not work properly.
+**Kenny Lau:** Continued working on the image to spectrogram program. Started write-up for project. Getting closer with image to spectrogram, but still does not work properly.
 
-**David Chong** Created basic spectrogram using numpy, matplotlib, and scipy.  Still need to work on creating a better looking graph with more discernable features.
+**David Chong:** Created basic spectrogram using numpy, matplotlib, and scipy.  Still need to work on creating a better looking graph with more discernable features.
 
 ### 12/15/21
 **Kenny Lau:** Learned/explored necessary Python libraries in order to convert image to audio (PIL/Pillow and scipy). Tried to make the program (Spectro.py) that converts an image into an audio file. Better understanding of how the program is *supposed* to work. It seems to crash now because the list holding the samples is huge. Need to find a better method of appending samples to a WAV file (maybe one that doesn't store a lot of samples in memory).
