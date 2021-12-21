@@ -18,8 +18,8 @@ def newMain():
     audio.setsampwidth(2); #2 bytes, 16 bit-depth
     audio.setframerate(sampleRate);
 
-    maxFreq = 17000;
-    minFreq = 200;
+    maxFreq = 17000; #high end of human hearing frequency at 20kHz
+    minFreq = 200; #low end of human hearing frequency at 20Hz
     freqRange = maxFreq - minFreq;
     samplesPerColumn = math.floor(totalSamples / width);
 
@@ -35,6 +35,7 @@ def newMain():
             frequency = (freqRange / height) * (height - row) + minFreq;
             #print(frequency);
 
+            #print(math.sin(frequency * 2 * math.pi * sample / sampleRate), frequency * 2 * math.pi * sample / sampleRate, frequency / sampleRate * 2 * math.pi * sample, frequency / sampleRate);
             superimposed = superimposed + intensity * math.sin(frequency * 2 * math.pi * sample / sampleRate);
 
         superimposedbytelike = array.array('h'); #'h' indicates signed short (2 bytes), which is what we need since bit-depth is 16 bits
@@ -46,35 +47,6 @@ def newMain():
         audio.writeframes(superimposedbytelike); #we needed the array.array() since writeframes() only takes in a byte-like object
 
     audio.close();
-
-    """
-    for x in range(width):
-        print(x);
-        sample = 0;
-        for y in range(height):
-            #sample = 0;
-            intensity = image.getpixel((x,y));
-            #print(intensity);
-            #print(intensity, frequency, freqRange);
-            for i in range(0, freqPerPixel):
-                #print(i);
-                sample = sample + intensity * math.sin(x * 2 * math.pi * i/sampleRate);
-                #print(intensity * math.sin(x * 2 * math.pi * i/sampleRate));
-                #result.append(int(math.floor(sample)));
-                #print(int(math.floor(sample)));
-                #print(sample);
-                if (sample > 32767 or sample < -32767):
-                    sample = 32767;
-                    samples = struct.pack("<h", int(sample));
-                    audio.writeframesraw(samples);
-                    sample = 0;
-            #result.append(temp);
-        #print(sample);
-        samples = struct.pack("<h", int(sample));
-        audio.writeframesraw(samples);
-
-    #audio.writeframes(result);
-    """
 
 def main():
     sampleRate = 44100; #sampling rate
