@@ -13,11 +13,6 @@ def method2():
     pixels = image.load(); #load the pixels into an array
     width, height = image.size; #dimensions of the image
 
-    audio = wave.open("newSpectro.wav", "w"); #open audio file we're writing to
-    audio.setnchannels(1); #set number of channels (mono)
-    audio.setsampwidth(2); #2 bytes, 16 bit-depth
-    audio.setframerate(sampleRate); #set sampling rate
-
     maxFreq = 17000; #high end of human hearing frequency at 20kHz
     minFreq = 200; #low end of human hearing frequency at 20Hz
     freqRange = maxFreq - minFreq; #frequency range we are writing to
@@ -27,15 +22,18 @@ def method2():
     for row in range(height):
         samples = np.linspace(0, audioLength, totalSamples);
         intensityArray = [];
+        lastIntensity = 0;
+        frequency = (freqRange / height) * (height - row) + minFreq;
+        #print(frequency);
         for col in range(width):
             intensity = image.getpixel((col, row));
-            frequency = (freqRange / height) * (height - row) + minFreq;
             for i in range(samplesPerColumn):
                 intensityArray.append(intensity);
+                lastIntensity = intensity;
 
         result = np.sin(frequency * 2 * np.pi * samples);
         while (len(intensityArray) < len(result)):
-            intensityArray.append(1);
+            intensityArray.append(lastIntensity);
         toWrite = result * intensityArray;
 
         if (len(superimposed) == 0):
@@ -43,6 +41,11 @@ def method2():
         else:
             superimposed = superimposed + toWrite;
 
+    for i in range(len(superimposed)):
+        if superimposed[i] > 32767:
+            superimposed[i] = 32767;
+        elif superimposed[i] < -32768:
+            superimposed[i] = -32768;
     superimposed = np.int16(superimposed);
     wavfile.write("testingmethod2.wav", sampleRate, superimposed);
 
