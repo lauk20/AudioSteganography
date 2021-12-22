@@ -8,6 +8,9 @@
 
 
 ## Development Log
+### 12/21/21
+**Kenny Lau:** Worked on write-up and presentation. Tested the programs we have made so far.
+
 ### 12/20/21
 **Kenny Lau:** Started detailed write-up on project to explain what we learned while working on this project. Started on slides for presentation.
 
