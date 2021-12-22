@@ -4,6 +4,48 @@ import array
 from scipy.io import wavfile
 import numpy as np
 
+def method2():
+    sampleRate = 44100; #audio sampling rate
+    audioLength = 5; #seconds
+    totalSamples = sampleRate * audioLength; #total samples in audio
+
+    image = Image.open("lambo.jpg").convert("L"); #open image and convert to grayscale image
+    pixels = image.load(); #load the pixels into an array
+    width, height = image.size; #dimensions of the image
+
+    audio = wave.open("newSpectro.wav", "w"); #open audio file we're writing to
+    audio.setnchannels(1); #set number of channels (mono)
+    audio.setsampwidth(2); #2 bytes, 16 bit-depth
+    audio.setframerate(sampleRate); #set sampling rate
+
+    maxFreq = 17000; #high end of human hearing frequency at 20kHz
+    minFreq = 200; #low end of human hearing frequency at 20Hz
+    freqRange = maxFreq - minFreq; #frequency range we are writing to
+    samplesPerColumn = totalSamples // width; #how many samples each column in the image will need to meet the audio length;
+
+    superimposed = [];
+    for row in range(height):
+        samples = np.linspace(0, audioLength, totalSamples);
+        intensityArray = [];
+        for col in range(width):
+            intensity = image.getpixel((col, row));
+            frequency = (freqRange / height) * (height - row) + minFreq;
+            for i in range(samplesPerColumn):
+                intensityArray.append(intensity);
+
+        result = np.sin(frequency * 2 * np.pi * samples);
+        while (len(intensityArray) < len(result)):
+            intensityArray.append(1);
+        toWrite = result * intensityArray;
+
+        if (len(superimposed) == 0):
+            superimposed = toWrite;
+        else:
+            superimposed = superimposed + toWrite;
+
+    superimposed = np.int16(superimposed);
+    wavfile.write("testingmethod2.wav", sampleRate, superimposed);
+
 def newMain():
     sampleRate = 44100; #audio sampling rate
     audioLength = 5; #seconds
@@ -102,4 +144,5 @@ def main():
     #print(counter);
     print("DONE");
     audio.close();
-newMain();
+#newMain();
+method2();
