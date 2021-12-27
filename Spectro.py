@@ -1,10 +1,9 @@
 from PIL import Image, ImageOps
-import wave, struct, math, random
-import array
 from scipy.io import wavfile
+import math
 import numpy as np
 
-def method2():
+def convert():
     sampleRate = 44100; #audio sampling rate
     audioLength = 5; #seconds
     totalSamples = sampleRate * audioLength; #total samples in audio
@@ -49,6 +48,15 @@ def method2():
     superimposed = np.int16(superimposed);
     wavfile.write("testingmethod2.wav", sampleRate, superimposed);
 
+convert();
+
+"""
+Code above is current functioning code/method used to convert
+Code below was code used when trying to figure out/learn/experiment
+"""
+
+
+"""
 def newMain():
     sampleRate = 44100; #audio sampling rate
     audioLength = 5; #seconds
@@ -149,3 +157,4 @@ def main():
     audio.close();
 #newMain();
 method2();
+"""
