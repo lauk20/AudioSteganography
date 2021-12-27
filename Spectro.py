@@ -3,6 +3,24 @@ from scipy.io import wavfile
 import math
 import numpy as np
 
+#this function converts an image into audio.
+#in-depth and detailed explanation is present in the Google Doc listed in the README
+#General Algorithm/Concept:
+"""
+DETAILED EXPLANATION OF HOW THIS WORKS IS IN THE README GOOGLE DOCS LINK!!
+(but here's the general concept):
+
+Every row on the image represents a frequency in the spectrogram.
+The brightness of a pixel represents the brightness on the spectrogram.
+We create a set of points that represents a sine wave of a specific frequency
+that represents a row on the image
+(and thus a specific frequency on the spectrogram),
+with each point having its own amplitude,
+then we smash the sine waves of each row together to form a superimposed wave.
+Because a fourier transform can break the complex wave back into its individual
+frequencies, the spectrogram can show us the frequencies we created and the
+brightness of the pixels used (amplitude of the wave).
+"""
 def convert():
     sampleRate = 44100; #audio sampling rate
     audioLength = 5; #seconds
@@ -17,36 +35,36 @@ def convert():
     freqRange = maxFreq - minFreq; #frequency range we are writing to
     samplesPerColumn = totalSamples // width; #how many samples each column in the image will need to meet the audio length;
 
-    superimposed = [];
-    for row in range(height):
-        samples = np.linspace(0, audioLength, totalSamples);
-        intensityArray = [];
-        lastIntensity = 0;
-        frequency = (freqRange / height) * (height - row) + minFreq;
+    superimposed = []; #this will be the final complex sound wave
+    for row in range(height): #we are looping through the image row by row
+        samples = np.linspace(0, audioLength, totalSamples); #this creates an np array of [totalSamples] elements
+        intensityArray = []; #this is the array that will hold amplitude values
+        lastIntensity = 0; #this is the last intensity/amplitude value that was written
+        frequency = (freqRange / height) * (height - row) + minFreq; #the frequency that we are writing to. scaled by the range and added to the min. higher frequency = higher row of image
         #print(frequency);
-        for col in range(width):
-            intensity = image.getpixel((col, row));
-            for i in range(samplesPerColumn):
-                intensityArray.append(intensity);
-                lastIntensity = intensity;
+        for col in range(width): #loop through each column of the row in the image
+            intensity = image.getpixel((col, row)); #get the color intensity/"brightness" of the image
+            for i in range(samplesPerColumn): #we need to repeat this [samplesPerColumn] number of times in order to meet the audioLength and correct number of samples once we are done
+                intensityArray.append(intensity); #append the intensity to intensity array
+                lastIntensity = intensity; #assign lastIntensity to the appended intensity
 
-        result = np.sin(frequency * 2 * np.pi * samples);
-        while (len(intensityArray) < len(result)):
+        result = np.sin(frequency * 2 * np.pi * samples); #here are a finding the values for the samples in order to get a sine curve of the correct frequency. the return will be a np array.
+        while (len(intensityArray) < len(result)): #sometimes the intensity array isn't long enough to use np.multiply, so we append the last intensity to it.
             intensityArray.append(lastIntensity);
-        toWrite = result * intensityArray;
+        toWrite = result * intensityArray; #we multiply the intensity array with the array with sample values that form a sine curve. (amplitude * sine value)
 
-        if (len(superimposed) == 0):
+        if (len(superimposed) == 0): #adding to the resulting complex wave, if it has no elements yet, we assign it to the current wave we have
             superimposed = toWrite;
-        else:
+        else: #if there are elements, we add the array together (think of it as superimposing the wave/smashing two waves together to form a complex wave).
             superimposed = superimposed + toWrite;
 
-    for i in range(len(superimposed)):
+    for i in range(len(superimposed)): #16-bit depth audio, values should be limited.
         if superimposed[i] > 32767:
             superimposed[i] = 32767;
         elif superimposed[i] < -32768:
             superimposed[i] = -32768;
     superimposed = np.int16(superimposed);
-    wavfile.write("testingmethod2.wav", sampleRate, superimposed);
+    wavfile.write("image.wav", sampleRate, superimposed); #write to the audio file
 
 convert();
 
