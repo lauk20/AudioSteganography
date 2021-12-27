@@ -8,11 +8,23 @@
 
 
 ## Development Log
+### 12/27/21
+**Kenny Lau:** Added comments to code and made formatting better.
+
+### 12/26/21
+**Kenny Lau:** Worked on write-up/explanation of concepts.
+
+### 12/23/21
+**Kenny Lau:** Worked on presentation/slides.
+
+### 12/22/21
+**Kenny Lau:** Worked on the method where WAV chunks are added at the end of an audio file. (Raw message added to end of file but enclosed in WAV chunk so that it does not break audio playing programs).
+
 ### 12/21/21
 **Kenny Lau:** Worked on write-up and presentation. Tested the programs we have made so far.
 
 ### 12/20/21
-**Kenny Lau:** Started detailed write-up on project to explain what we learned while working on this project. Started on slides for presentation.
+**Kenny Lau:** Worked detailed write-up on project to explain what we learned while working on this project. Started on slides for presentation.
 
 ### 12/19/21
 **Kenny Lau:** Fixed LSB encoding. Before it was altering the LSB of every byte in the file. However, since we are using 16-bit audio files, this meant that not every LSB is truly insignificant. So, made it so that it only altered the LSB of the 2 bytes (i.e. the LSB of the 1st byte in the 2 byte series).
