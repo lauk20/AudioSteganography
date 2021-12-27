@@ -4,7 +4,11 @@
 
 **Team Members:** Kenny Lau, David Chong
 
-**Project Description:** Audio Steganography
+**Project Description:** Audio Steganography (Main techniques: LSB Encoding and Image to Audio).
+
+## Run Instructions
+1. To compile the C programs run ```make```.
+2. 
 
 
 ## Development Log
@@ -44,3 +48,6 @@
 **Kenny Lau:** Did research on how to write WAV files from a given frequency and volume (etc.) (Need to download something for Java, maybe need to look into another language.) Started working on image to spectrogram program in Python. Needed to learn how to handle/write WAV files in Python along with how to process images in Python. Spent ~1 hr on image to spectrogram with little success towards the end goal.
 
 **David Chong:** Filled out Google forms and worked on creating slides to present project.  Researching how spectrogramming would work in Python, and other languages where it would be possible, little success so far.
+
+## Before 12/14/21 (before logging)
+We completed our base code for least significant bit encoding and decoding and learned/researched how WAV files are structured/work (researched).
