@@ -6,17 +6,42 @@
 
 **Project Description:** Audio Steganography (Main techniques: LSB Encoding and Image to Audio).
 
-## Run Instructions
+## Dependencies Instructions
 1. To compile the C programs run ```make```.
-2. 
+2. Install, if you don't already have, PIL for Python (pip install Pillow). More installation support here: https://pillow.readthedocs.io/en/stable/installation.html
+3. Install, if you don't already have, scipy.io for Python (pip install scipy). More installation support here: https://scipy.org/install/
+4. Install, if you dont' already have, numpy for Python (pip install np). More installation support here: https://numpy.org/install/.
+5. It is recommended you install Audacity to have the full experience: https://manual.audacityteam.org/index.html
+6. We are assuming you have the math library in Python and can run ```import math```.
+NOTE: THESE INSTALLATIONS WORKED FOR US BUT IT WAS NEVER EXTENSIVELY TESTED. They seem to be already installed on the cs-lab machines though.
+
+## Run Instructions
+If you want Least Significant Bit encoding: (Refer to limitations section too)
+1. Encoding a message: "./main encode lsb [AudioFileName.wav] [OPTIONAL: message (will read from stdin if not given)]"
+2. Decoding a message "./main decode lsb [AudioFileName.wav]"
+
+To convert image to audio:
+1. python3 Spectro.py [ImageFileNameHere.png]
+
+To view converted image:
+1. Audacity is recommended, use the spectrogram viewer in the program. Support: https://manual.audacityteam.org/man/spectrogram_view.html
+2. Any spectrogram viewer that works as well as Audacity (a good audio editing software).
+Tips: Using linear for Scale and greyscale for Scheme spectrogram settings seems to produce a nice looking image!
+
+## Limitations
+1. The limit for the size of Least Significant Bit encoding is 1000 bytes. It is a hard-coded limit.
+2. There is currently a hard-coded audio duration of 5 seconds, max frequency of 17 kHz, min frequency of 200 Hz, for the image to audio converter.
 
 
 ## Development Log
+### 12/28/21
+**Kenny Lau:** Finished up image to audio section of write-up (may need some editing later). Worked on documentation for README.
+
 ### 12/27/21
-**Kenny Lau:** Added comments to code and made formatting better.
+**Kenny Lau:** Added comments to code and made formatting better. Started the image to spectrogram section of write-up.
 
 ### 12/26/21
-**Kenny Lau:** Worked on write-up/explanation of concepts.
+**Kenny Lau:** Worked on write-up/explanation of concepts (LSB explanation).
 
 ### 12/23/21
 **Kenny Lau:** Worked on presentation/slides.
@@ -49,5 +74,5 @@
 
 **David Chong:** Filled out Google forms and worked on creating slides to present project.  Researching how spectrogramming would work in Python, and other languages where it would be possible, little success so far.
 
-## Before 12/14/21 (before logging)
+### Before 12/14/21 (before logging)
 We completed our base code for least significant bit encoding and decoding and learned/researched how WAV files are structured/work (researched).
