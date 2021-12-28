@@ -13,6 +13,7 @@
 4. Install, if you dont' already have, numpy for Python (pip install np). More installation support here: https://numpy.org/install/.
 5. It is recommended you install Audacity to have the full experience: https://manual.audacityteam.org/index.html
 6. We are assuming you have the math library in Python and can run ```import math```.
+
 NOTE: THESE INSTALLATIONS WORKED FOR US BUT IT WAS NEVER EXTENSIVELY TESTED. They seem to be already installed on the cs-lab machines though.
 
 ## Run Instructions
