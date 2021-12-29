@@ -8,12 +8,12 @@
 
 #include <string.h>
 
-void encode(char * filename){
+void encode(char * filename, char * message){
     int fd = open(filename, O_WRONLY | O_APPEND, 0644);
     char var[5] = "LENO";
     write(fd, var, 4);
 
-    char message[1000] = "Greed will be the death of us all.a";
+    //char message[1000] = "Greed will be the death of us all.";
     int size = strlen(message) + 1;
     write(fd, &size, 4);
     write(fd, message, size);
@@ -64,7 +64,24 @@ void decode(char * filename){
   free(data);
 }
 
-int main(){
-  encode("furelisecopy.wav");
-  decode("furelisecopy.wav");
+int main(int argc, char ** args){
+  if (argc < 3){
+    printf("./alternate [encode/decode] [filename] [OPTIONAL for decode: message]\n");
+    return -1;
+  }
+  if (strcmp(args[1], "encode") == 0){
+    if (argc < 4){
+      printf("./alternate [encode] [filename] [message]\n");
+      return -1;
+    }
+    encode(args[2], args[3]);
+  } else if (strcmp(args[1], "decode") == 0){
+    if (argc < 3){
+      printf("./alternate [decode] [filename]\n");
+      return -1;
+    }
+    decode(args[2]);
+  }
+
+  return 0;
 }
