@@ -200,9 +200,13 @@ int main(int argc, char ** args) {
   if (strcmp(args[1], "encode") == 0){
     if (strcmp(args[2], "lsb") == 0){
       if (argc > 4){
+        printf("Warning: if message is longer than 1000 bytes, behavior will be undefined\n");
         encode_from_message(args[3], args[4], strlen(args[4]));
+        printf("MESSAGE HAS BEEN ENCODED TO audio.wav. RUN \"./main decode lsb audio.wav\" TO DECODE IT\n");
       } else {
+        printf("Warning: if message is longer than 1000 bytes, behavior will be undefined\n");
         encode(args[3]);
+        printf("MESSAGE HAS BEEN ENCODED TO audio.wav. RUN \"./main decode lsb audio.wav\" TO DECODE IT\n");
       }
     } else if (strcmp(args[2], "parity") == 0){
       if (argc > 4){
