@@ -27,7 +27,10 @@ def convert():
     audioLength = 5; #seconds
     totalSamples = sampleRate * audioLength; #total samples in audio
 
-    image = Image.open(sys.argv[2]).convert("L"); #open image and convert to grayscale image
+    if(sys.argv[2] != None):
+        image = Image.open(sys.argv[2]).convert("L"); #open image and convert to grayscale image
+    else:
+         image = Image.open("lambo.jpg").convert("L"); #open image and convert to grayscale image
     pixels = image.load(); #load the pixels into an array
     width, height = image.size; #dimensions of the image
 
