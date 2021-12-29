@@ -2,6 +2,7 @@ from PIL import Image, ImageOps
 from scipy.io import wavfile
 import math
 import numpy as np
+import sys
 
 #this function converts an image into audio.
 #in-depth and detailed explanation is present in the Google Doc listed in the README
@@ -26,7 +27,7 @@ def convert():
     audioLength = 5; #seconds
     totalSamples = sampleRate * audioLength; #total samples in audio
 
-    image = Image.open("lambo.jpg").convert("L"); #open image and convert to grayscale image
+    image = Image.open(sys.argv[2]).convert("L"); #open image and convert to grayscale image
     pixels = image.load(); #load the pixels into an array
     width, height = image.size; #dimensions of the image
 
