@@ -19,7 +19,7 @@
 1. To compile the C programs run ```make```.
 2. Install, if you don't already have, PIL for Python (pip install Pillow). More installation support here: https://pillow.readthedocs.io/en/stable/installation.html
 3. Install, if you don't already have, scipy.io for Python (pip install scipy). More installation support here: https://scipy.org/install/
-4. Install, if you don't already have, numpy for Python (pip install np). More installation support here: https://numpy.org/install/.
+4. Install, if you dont' already have, numpy for Python (pip install np). More installation support here: https://numpy.org/install/.
 5. It is recommended you install Audacity to have the full experience: https://manual.audacityteam.org/index.html
 6. We are assuming you have the math library in Python and can run ```import math```.
 
@@ -36,21 +36,18 @@ To convert image to audio:
 To view converted image:
 1. Audacity is recommended, use the spectrogram viewer in the program. Support: https://manual.audacityteam.org/man/spectrogram_view.html
 2. Any spectrogram viewer that works as well as Audacity (a good audio editing software).
-
-If you want to append a raw message chunk directly to the wav file (this is something extra we did):
-1. "./alternate [encode/decode] [filename] [OPTIONAL for decode: message]"
-
 Tips: Using linear for Scale and greyscale for Scheme spectrogram settings seems to produce a nice looking image!
 
 ## Limitations
-1. The limit for the size of Least Significant Bit encoding is 1000 bytes. It is a hard-coded limit. It is currently built for text-based encoding (it reads for a null byte (00000000) and stops reading once it finds it)
+1. The limit for the size of Least Significant Bit encoding is 1000 bytes. It is a hard-coded limit.
 2. There is currently a hard-coded audio duration of 5 seconds, max frequency of 17 kHz, min frequency of 200 Hz, for the image to audio converter.
 
+## Presentation Links
+Powerpoint - https://docs.google.com/presentation/d/1BeWU55k3sHakokKTNy1mZbwtRkcCIMDxmrGGU48ltVA/edit?usp=sharing
+
+Google Doc - https://docs.google.com/document/d/1vHWLy1LSQTMLBfN_6H04KEhEYpkxRPL0dML6CnsGCms/edit?usp=sharing
 
 ## Development Log
-### 1/1/22
-**Kenny Lau:** Worked on math explanation for slides. Updated documentation.
-
 ### 12/29/21
 **David Chong** Added Command line input for the spectrogram image, allowed for base image to be used as well as an image that the user can choose.  Have not tested for images other than jgps I think.
 
