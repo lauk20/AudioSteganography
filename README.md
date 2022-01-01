@@ -47,7 +47,10 @@ Tips: Using linear for Scale and greyscale for Scheme spectrogram settings seems
 
 ## Development Log
 ### 1/1/22
-**Kenny Lau:** Worked on math explanation for slides and README.
+**Kenny Lau:** Worked on math explanation for slides. Updated documentation.
+
+### 12/29/21
+**David Chong** Added Command line input for the spectrogram image, allowed for base image to be used as well as an image that the user can choose.  Have not tested for images other than jgps I think.
 
 ### 12/28/21
 **Kenny Lau:** Finished up image to audio section of write-up (may need some editing later). Worked on documentation for README.
@@ -61,20 +64,31 @@ Tips: Using linear for Scale and greyscale for Scheme spectrogram settings seems
 ### 12/23/21
 **Kenny Lau:** Worked on presentation/slides.
 
+**David Chong** Worked on presentation/slides.
+
 ### 12/22/21
 **Kenny Lau:** Worked on the method where WAV chunks are added at the end of an audio file. (Raw message added to end of file but enclosed in WAV chunk so that it does not break audio playing programs).
+
+**David Chong** Worked with Kenny on completing the file
 
 ### 12/21/21
 **Kenny Lau:** Worked on write-up and presentation. Tested the programs we have made so far.
 
+**David Chong** Created file for alternate encoding portion of sound file.  Very basic, adds plaintext to the end of the wav file.
+
 ### 12/20/21
 **Kenny Lau:** Worked detailed write-up on project to explain what we learned while working on this project. Started on slides for presentation.
+
+**David Chong** Started on slides for presentation.
 
 ### 12/19/21
 **Kenny Lau:** Fixed LSB encoding. Before it was altering the LSB of every byte in the file. However, since we are using 16-bit audio files, this meant that not every LSB is truly insignificant. So, made it so that it only altered the LSB of the 2 bytes (i.e. the LSB of the 1st byte in the 2 byte series).
 
 ### 12/17/21
 **Kenny Lau:** Finally got image to spectrogram program working. Needs to improve/learn how to take in command line arguments for Python. (Used Audacity to view the spectrogram created from image).
+
+**David Chong** Researched matplotlib's documentation for ways to make image shown more presentable
+
 
 ### 12/16/21
 **Kenny Lau:** Continued working on the image to spectrogram program. Started write-up for project. Getting closer with image to spectrogram, but still does not work properly.
