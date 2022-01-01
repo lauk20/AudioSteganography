@@ -6,11 +6,18 @@
 
 **Project Description:** Audio Steganography (Main techniques: LSB Encoding and Image to Audio).
 
+## Files
+1. main.c : The C code that does LSB encoding/decoding.
+2. Spectro.py : The Python code that writes an image into wav file.
+3. alternate.c : The C code that appends a wav chunk that contains a raw message. (This was something extra we did).
+4. furelise.wav : Fur Elise by Beethoven audio in wav format.
+5.
+
 ## Dependencies Instructions
 1. To compile the C programs run ```make```.
 2. Install, if you don't already have, PIL for Python (pip install Pillow). More installation support here: https://pillow.readthedocs.io/en/stable/installation.html
 3. Install, if you don't already have, scipy.io for Python (pip install scipy). More installation support here: https://scipy.org/install/
-4. Install, if you dont' already have, numpy for Python (pip install np). More installation support here: https://numpy.org/install/.
+4. Install, if you don't already have, numpy for Python (pip install np). More installation support here: https://numpy.org/install/.
 5. It is recommended you install Audacity to have the full experience: https://manual.audacityteam.org/index.html
 6. We are assuming you have the math library in Python and can run ```import math```.
 
@@ -27,14 +34,21 @@ To convert image to audio:
 To view converted image:
 1. Audacity is recommended, use the spectrogram viewer in the program. Support: https://manual.audacityteam.org/man/spectrogram_view.html
 2. Any spectrogram viewer that works as well as Audacity (a good audio editing software).
+
+If you want to append a raw message chunk directly to the wav file (this is something extra we did):
+1. "./alternate [encode/decode] [filename] [OPTIONAL for decode: message]"
+
 Tips: Using linear for Scale and greyscale for Scheme spectrogram settings seems to produce a nice looking image!
 
 ## Limitations
-1. The limit for the size of Least Significant Bit encoding is 1000 bytes. It is a hard-coded limit.
+1. The limit for the size of Least Significant Bit encoding is 1000 bytes. It is a hard-coded limit. It is currently built for text-based encoding (it reads for a null byte (00000000) and stops reading once it finds it)
 2. There is currently a hard-coded audio duration of 5 seconds, max frequency of 17 kHz, min frequency of 200 Hz, for the image to audio converter.
 
 
 ## Development Log
+### 1/1/22
+**Kenny Lau:** Worked on math explanation for slides and README.
+
 ### 12/28/21
 **Kenny Lau:** Finished up image to audio section of write-up (may need some editing later). Worked on documentation for README.
 
