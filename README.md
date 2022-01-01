@@ -6,6 +6,8 @@
 
 **Project Description:** Audio Steganography (Main techniques: LSB Encoding and Image to Audio).
 
+**Project Write-Up:** https://docs.google.com/document/d/1MVSCTSzuoAy4WSOHk-gu4xDhxMN5YxmC2fnSQmBmudE/edit?usp=sharing (Must use .edu address)
+
 ## Files
 1. main.c : The C code that does LSB encoding/decoding.
 2. Spectro.py : The Python code that writes an image into wav file.
