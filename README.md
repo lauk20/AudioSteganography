@@ -56,6 +56,8 @@ Google Doc - https://docs.google.com/document/d/1MVSCTSzuoAy4WSOHk-gu4xDhxMN5Yxm
 
 ## Development Log
 ### 1/1/22
+**David Chong** Worked on revising slides, added introduction
+
 **Kenny Lau:** Worked on math explanation for slides and updated README documentation
 ### 12/29/21
 
