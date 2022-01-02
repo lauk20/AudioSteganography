@@ -34,6 +34,7 @@ If you want Least Significant Bit encoding: (Refer to limitations section too)
 
 To convert image to audio:
 1. python3 Spectro.py [ImageFileNameHere.png]
+2. "python3 Spectro.py" will use the image in the repo: lambo.jpg
 
 To view converted image:
 1. Audacity is recommended, use the spectrogram viewer in the program. Support: https://manual.audacityteam.org/man/spectrogram_view.html
