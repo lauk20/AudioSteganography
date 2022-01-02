@@ -8,6 +8,8 @@
 
 **Project Write-Up:** https://docs.google.com/document/d/1MVSCTSzuoAy4WSOHk-gu4xDhxMN5YxmC2fnSQmBmudE/edit?usp=sharing (Must use .edu address)
 
+**Project Slides:** https://docs.google.com/presentation/d/1BeWU55k3sHakokKTNy1mZbwtRkcCIMDxmrGGU48ltVA/edit?usp=sharing (Must use .edu address)
+
 ## Files
 1. main.c : The C code that does LSB encoding/decoding.
 2. Spectro.py : The Python code that writes an image into wav file.
@@ -45,7 +47,7 @@ Tips: Using linear for Scale and greyscale for Scheme spectrogram settings seems
 ## Presentation Links
 Powerpoint - https://docs.google.com/presentation/d/1BeWU55k3sHakokKTNy1mZbwtRkcCIMDxmrGGU48ltVA/edit?usp=sharing
 
-Google Doc - https://docs.google.com/document/d/1vHWLy1LSQTMLBfN_6H04KEhEYpkxRPL0dML6CnsGCms/edit?usp=sharing
+Google Doc - https://docs.google.com/document/d/1MVSCTSzuoAy4WSOHk-gu4xDhxMN5YxmC2fnSQmBmudE/edit?usp=sharing
 
 ## Development Log
 ### 12/29/21
