@@ -49,14 +49,11 @@ If you want to append a raw message chunk directly to the wav file (this is some
 1. The limit for the size of Least Significant Bit encoding is 1000 bytes. It is a hard-coded limit. It is currently built for text-based encoding (it reads for a null byte (00000000) and stops reading once it finds it)
 2. There is currently a hard-coded audio duration of 5 seconds, max frequency of 17 kHz, min frequency of 200 Hz, for the image to audio converter.
 
-## Presentation Links
-Powerpoint - https://docs.google.com/presentation/d/1BeWU55k3sHakokKTNy1mZbwtRkcCIMDxmrGGU48ltVA/edit?usp=sharing
-
-Google Doc - https://docs.google.com/document/d/1MVSCTSzuoAy4WSOHk-gu4xDhxMN5YxmC2fnSQmBmudE/edit?usp=sharing
-
 ## Development Log
+
+### 1/2/22
+**David Chong** Worked on revising slides, added introduction, edited readme
 ### 1/1/22
-**David Chong** Worked on revising slides, added introduction
 
 **Kenny Lau:** Worked on math explanation for slides and updated README documentation
 ### 12/29/21
